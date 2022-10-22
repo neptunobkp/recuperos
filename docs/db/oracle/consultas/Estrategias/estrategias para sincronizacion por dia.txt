@@ -1,0 +1,88 @@
+
+        [HttpGet]
+        [Route("estrategia1")]
+        public async Task<IEnumerable<SiniestroBase>> Estrategia1(string compania, int dia, int mes, int anio)
+        {
+            using (var conn = new OracleConnection(ConfigurationManager.ConnectionStrings["P02Db"].ConnectionString))
+            {
+                var data = await conn.QueryAsync<SiniestroBase>($@"select 
+                    SELE.NSINIE_ELE Numero,
+                    SELE.NRIESG_ELE Riesgo,
+                    SIN.fsinid_sin DiaSiniestro,
+                    SIN.fsinim_sin  MesSiniestro,
+                    SIN.fsinia_sin AnioSiniestro, 
+                    SELE.CSUCUR_ELE CodigoSucursal,
+                    SELE.CTPDOC_ELE TipoDocumento,
+                    SELE.NPOLIZ_ELE NumeroPoliza, 
+                    SELE.NITEM_ELE NumeroItem
+                    from  {compania}.SNACSELE SELE 
+                    JOIN {compania}.SNACSSIN SIN ON SELE.NSINIE_ELE = SIN.NSINIE_SIN 
+                    WHERE SELE.finsna_ele = :anio  
+                        AND SELE.finsnm_ele  = :mes 
+                        AND SELE.finsnd_ele = :dia 
+                        AND (SELE.NRIESG_ELE = 2 or 
+                            SELE.NRIESG_ELE = 6 or 
+                            SELE.NRIESG_ELE = 10 or 
+                            SELE.NRIESG_ELE = 11 or 
+                            SELE.NRIESG_ELE = 12)",
+                    new
+                    {
+                        dia = dia,
+                        mes = mes,
+                        anio = anio
+                    });
+
+                var resultado = GetMergeSiniestros(data.ToList());
+                return resultado;
+            }
+        }
+
+       
+
+
+        [HttpGet]
+        [Route("estrategia3")]
+        public async Task<IEnumerable<SiniestroBase>> Estrategia3(string compania, int dia, int mes, int anio)
+        {
+            using (var conn = new OracleConnection(ConfigurationManager.ConnectionStrings["P02Db"].ConnectionString))
+            {
+                return await conn.QueryAsync<SiniestroBase>($@"select 
+                    ELE.NSINIE_ELE Numero,
+                    ELE.NRIESG_ELE Riesgo,
+                    SIN.fsinid_sin DiaSiniestro,
+                    SIN.fsinim_sin  MesSiniestro,
+                    SIN.fsinia_sin AnioSiniestro, 
+                    ELE.CSUCUR_ELE CodigoSucursal,
+                    ELE.CTPDOC_ELE TipoDocumento,
+                    ELE.NPOLIZ_ELE NumeroPoliza, 
+                    ELE.NITEM_ELE NumeroItem
+    from concorde.SNACSSIN SIN
+    join   
+    (
+        select pro1.*
+        from 
+            (
+                select n.*,
+                    row_number() over 
+                    (
+                        partition by NSINIE_ELE 
+                        order by 
+                        NRIESG_ELE
+                    ) rn 
+               from CONCORDE.SNACSELE n 
+               WHERE  n.NRIESG_ELE in (6,10,11,12)
+            ) pro1
+        where pro1.rn = 1
+    ) 
+    ELE on ( SIN.NSINIE_SIN = ELE.NSINIE_ELE )
+ where              ELE.finsna_ele = :anio
+                        AND ELE.finsnm_ele  = :mes
+                        AND ELE.finsnd_ele = :dia",
+                    new
+                    {
+                        dia = dia,
+                        mes = mes,
+                        anio = anio
+                    });
+            }
+        }

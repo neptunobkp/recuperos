@@ -1,0 +1,43 @@
+CREATE OR REPLACE FORCE VIEW ADMSISREC.QSINIESTROMC
+AS
+   SELECT /*+ driving_site(src) */
+         SIN."Id",
+          SIN."Numero",
+          SIN."Compania",
+          SIN."Riesgo",
+          SIN."FechaDenuncio",
+          SIN."FechaSiniestro",
+          SIN."FechaAsignacion",
+          SIN."EjecutivoId",
+          usu."Nombres"                          "EjecutivoNombres",
+          SIN."FechaUltimoCambioEstado",
+          SIN."EstadoId",
+          est."DiasAlerta"                       "EstadoDiasAlerta",
+          est."Nombre"                           "EstadoNombre",
+          est."EtapaId"                          "EtapaId",
+          SIN."CompaniaTercero",
+          SIN."Region",
+          TRUNC ( (SYSDATE - NVL (SIN."FechaUltimoCambioEstado", SYSDATE)))
+             "DiasGestion",
+            TRUNC ( (SYSDATE - NVL (SIN."FechaUltimoCambioEstado", SYSDATE)))
+          - est."DiasAlerta"
+             "AlertaGestion",
+          SIN."Probabilidad",
+          TRUNC (SYSDATE - SIN."FechaSiniestro") "Prescripcion",
+          SIN."Daterc",
+          SIN."EstadoVisado",
+          SIN."ActualizadoPor",
+          svies."Nombre"                         "EstadoDestinoNombre",
+          SIN."GastoUf",
+          SIN."TipoOrden",
+          SIN."MontoOr",
+          SIN."Provision",
+          Decode(SIN."Aceptado",1,'A',null) as "Aceptado"
+     FROM siniestros SIN
+          LEFT OUTER JOIN USUARIOS usu ON usu."Id" = SIN."EjecutivoId"
+          LEFT OUTER JOIN SOLICITUDESVISTO svi
+             ON     svi."SiniestroId" = SIN."Id"
+                AND svi."Id" = SIN."EstadoVisado"
+          LEFT OUTER JOIN ESTADOS svies
+             ON svies."Id" = svi."EstadoTDestinoId"
+          JOIN ESTADOS est ON est."Id" = SIN."EstadoId";

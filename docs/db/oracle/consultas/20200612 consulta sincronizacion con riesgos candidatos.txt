@@ -1,0 +1,27 @@
+select 
+SIN.NSINIE_SIN, 
+X.NRIESG_ELE
+    from concorde.SNACSSIN SIN
+    left outer join   
+    (
+        select pro1.NSINIE_ELE, pro1.NRIESG_ELE, pro1.finsna_ele, pro1.finsnm_ele, pro1.finsnd_ele
+        from 
+            (
+                select n.NSINIE_ELE, n.NRIESG_ELE, n.CRAMO_ELE, n.finsna_ele, n.finsnm_ele, n.finsnd_ele, 
+                    row_number() over 
+                    (
+                        partition by NSINIE_ELE 
+                        order by 
+                        NRIESG_ELE
+                    ) rn 
+               from CONCORDE.SNACSELE n 
+               WHERE  (n.NRIESG_ELE = 6 or n.NRIESG_ELE = 10 or n.NRIESG_ELE = 11 or n.NRIESG_ELE = 12)
+                      AND (n.CRAMO_ELE = 'VC' OR n.CRAMO_ELE = 'VP' OR n.CRAMO_ELE = 'TE')
+            ) pro1
+        where pro1.rn = 1
+    ) 
+    X on ( SIN.NSINIE_SIN = x.NSINIE_ELE )
+ where              X.finsna_ele = 2019
+                        AND X.finsnm_ele  = 3
+                        AND X.finsnd_ele = 1
+                        ORDER BY SIN.NSINIE_SIN;

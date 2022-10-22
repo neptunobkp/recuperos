@@ -1,0 +1,147 @@
+CREATE OR REPLACE PROCEDURE ADMSISREC.SYNCCOLSW AS
+BEGIN
+INSERT INTO COLUMNAS_W (TNUMERO, TGASTOUF, TTIPOORDEN , TMONTOOR ,TPROVISION,TACEPTADA, TTIPODANIO )
+ SELECT 
+          SIN."Numero",
+          CASE
+             WHEN SIN."Compania" = 1
+             THEN
+                CASE
+                   WHEN csele.CCOETS_ELE = 4 THEN csele.VMPEST_ELE
+                   WHEN (csele.VMPEST_ELE - cpro.cvprovi) <= 0 THEN 0
+                   ELSE (csele.VMPEST_ELE - cpro.cvprovi)
+                END
+             WHEN SIN."Compania" = 2
+             THEN
+                CASE
+                   WHEN bsele.CCOETS_ELE = 4 THEN bsele.VMPEST_ELE
+                   WHEN (bsele.VMPEST_ELE - bpro.bvprovi) <= 0 THEN 0
+                   ELSE (bsele.VMPEST_ELE - bpro.bvprovi)
+                END
+          END
+             AS "GastoUf",
+          CASE
+             WHEN SIN."Compania" = 1 THEN CSOCR.CTIPOR_OCR
+             WHEN SIN."Compania" = 2 THEN BSOCR.CTIPOR_OCR
+          END
+             AS "TipoOrden",
+          CASE
+             WHEN SIN."Compania" = 1 THEN CCPA.MONTO_PESOS
+             WHEN SIN."Compania" = 2 THEN BCPA.MONTO_PESOS
+          END
+             AS "MontoOr",
+          CASE
+             WHEN SIN."Compania" = 1
+             THEN
+                CASE WHEN CSELE.CCOETS_ELE = 4 THEN 0 ELSE cpro.cvprovi END
+             WHEN SIN."Compania" = 2
+             THEN
+                CASE WHEN BSELE.CCOETS_ELE = 4 THEN 0 ELSE bpro.bvprovi END
+          END
+             AS "Proveision",
+          CASE
+             WHEN SIN."Compania" = 1 THEN CSELE.CCOESS_ELE
+             WHEN SIN."Compania" = 2 THEN BSELE.CCOESS_ELE
+          END
+             AS "Aceptado",
+         CASE
+            WHEN SIN."Compania" = 1 THEN CASE WHEN CSGT.ccstsgt_sta IS NULL THEN 'PT' ELSE 'PP' END
+            WHEN SIN."Compania" = 2 THEN CASE WHEN BSGT.bcstsgt_sta IS NULL THEN 'PT' ELSE 'PP' END 
+          END
+             AS "TipoDanio"
+     FROM siniestros SIN
+          LEFT OUTER JOIN CONCORDE.SNACSELE@RDB_P02.bciseguros.cl csele
+             ON     csele.NSINIE_ELE = SIN."Numero"
+                AND csele.NRIESG_ELE = SIN."Riesgo"
+                AND csele.NDOCTO_ELE = SIN."NumeroPoliza"
+                AND csele.CTPDOC_ELE = SIN."TipoDocumento"
+                AND csele.CSUCUR_ELE = SIN."CodigoSucursal"
+                AND csele.NITEM_ELE  = SIN."NumeroItem"
+          LEFT OUTER JOIN BRETON.SNACSELE@RDB_P02.bciseguros.cl bsele
+             ON     bsele.NSINIE_ELE = SIN."Numero"
+                AND bsele.NRIESG_ELE = SIN."Riesgo"
+                AND bsele.NDOCTO_ELE = SIN."NumeroPoliza"
+                AND bsele.CTPDOC_ELE = SIN."TipoDocumento"
+                AND bsele.CSUCUR_ELE = SIN."CodigoSucursal"
+                AND bsele.NITEM_ELE  = SIN."NumeroItem"
+          LEFT OUTER JOIN (  SELECT nsinie_pro, MAX (VPROVI_PRO) cvprovi
+                               FROM CONCORDE.SNACSPRO@RDB_P02.bciseguros.cl
+                              WHERE nsecue_pro = 999
+                           GROUP BY nsinie_pro) cpro
+             ON cpro.nsinie_pro = csele.NSINIE_ELE
+          LEFT OUTER JOIN (  SELECT nsinie_pro, MAX (VPROVI_PRO) bvprovi
+                               FROM BRETON.SNACSPRO@RDB_P02.bciseguros.cl
+                              WHERE nsecue_pro = 999
+                           GROUP BY nsinie_pro) bpro
+             ON bpro.nsinie_pro = bsele.NSINIE_ELE
+          LEFT OUTER JOIN (  SELECT NSINIE_CPA, SUM (VTDOPA_CPA) MONTO_PESOS
+                               FROM CONCORDE.SNABCCPA@RDB_P02.bciseguros.cl
+                              WHERE CESTAD_CPA = 'OK'
+                           GROUP BY NSINIE_CPA) CCPA
+             ON CSELE.NSINIE_ELE = CCPA.NSINIE_CPA
+          LEFT OUTER JOIN (  SELECT NSINIE_CPA, SUM (VTDOPA_CPA) MONTO_PESOS
+                               FROM BRETON.SNABCCPA@RDB_P02.bciseguros.cl
+                              WHERE CESTAD_CPA = 'OK'
+                           GROUP BY NSINIE_CPA) BCPA
+             ON BSELE.NSINIE_ELE = BCPA.NSINIE_CPA
+          LEFT OUTER JOIN (  SELECT NSINIE_STA, NRIESG_STA, MAX (cstsgt_sta) ccstsgt_sta
+                               FROM CONCORDE.SNAUGSTA@RDB_P02.bciseguros.cl
+                              WHERE CSTSGT_STA IN ('002', '010')
+                           GROUP BY NSINIE_STA, NRIESG_STA) CSGT
+             ON     CSGT.NSINIE_STA = cSELE.NSINIE_ELE
+                AND CSGT.NRIESG_STA = cSELE.NRIESG_ELE
+          LEFT OUTER JOIN (  SELECT NSINIE_STA, NRIESG_STA, MAX (cstsgt_sta) bcstsgt_sta
+                               FROM BRETON.SNAUGSTA@RDB_P02.bciseguros.cl
+                              WHERE CSTSGT_STA IN ('002', '010')
+                           GROUP BY NSINIE_STA, NRIESG_STA) BSGT
+             ON     BSGT.NSINIE_STA = BSELE.NSINIE_ELE
+                AND BSGT.NRIESG_STA = BSELE.NRIESG_ELE
+          LEFT JOIN
+          (SELECT NSINIE_OCR, CTIPOR_OCR
+             FROM (SELECT n.NSINIE_OCR,
+                          n.CTIPOR_OCR,
+                          ROW_NUMBER ()
+                          OVER (
+                             PARTITION BY NSINIE_OCR
+                             ORDER BY
+                                femisa_ocr DESC,
+                                femism_ocr DESC,
+                                femisd_ocr DESC)
+                             rn
+                     FROM CONCORDE.SNACSOCR@RDB_P02.bciseguros.cl n)
+            WHERE rn = 1) CSOCR
+             ON (cSELE.NSINIE_ELE = CSOCR.NSINIE_OCR)
+          LEFT JOIN
+          (SELECT NSINIE_OCR, CTIPOR_OCR
+             FROM (SELECT n.NSINIE_OCR,
+                          n.CTIPOR_OCR,
+                          ROW_NUMBER ()
+                          OVER (
+                             PARTITION BY NSINIE_OCR
+                             ORDER BY
+                                femisa_ocr DESC,
+                                femism_ocr DESC,
+                                femisd_ocr DESC)
+                             rn
+                     FROM BRETON.SNACSOCR@RDB_P02.bciseguros.cl n)
+            WHERE rn = 1) BSOCR
+             ON (bSELE.NSINIE_ELE = BSOCR.NSINIE_OCR);
+             
+MERGE INTO ADMSISREC.SINIESTROS t1
+USING
+(
+select TNUMERO, TGASTOUF, TTIPOORDEN, TMONTOOR, TPROVISION, DECODE(ltrim(rtrim(TACEPTADA)),'A',1,0) as TTACEPTADA, TTIPODANIO from COLUMNAS_W 
+)t2
+ON (t2.TNUMERO = t1."Numero")
+WHEN MATCHED THEN UPDATE SET
+t1."GastoUf" = t2.TGASTOUF,
+t1."TipoOrden" = t2.TTIPOORDEN,
+t1."MontoOr" = NVL(t2.TMONTOOR,0),
+t1."Provision" = t2.TPROVISION,
+t1."Aceptado" = t2.TTACEPTADA,
+t1."TipoDanio" = t2.TTIPODANIO;
+
+COMMIT;
+
+END SYNCCOLSW;
+

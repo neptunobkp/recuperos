@@ -1,0 +1,32 @@
+connect
+system
+tennis
+
+create user ADMSISREC identified by desa;
+grant CREATE SESSION, ALTER SESSION, CREATE DATABASE LINK, -
+  CREATE MATERIALIZED VIEW, CREATE PROCEDURE, CREATE PUBLIC SYNONYM, -
+  CREATE ROLE, CREATE SEQUENCE, CREATE SYNONYM, CREATE TABLE, - 
+  CREATE TRIGGER, CREATE TYPE, CREATE VIEW, UNLIMITED TABLESPACE -
+  to ADMSISREC;
+
+create user USRSISREC identified by desa;
+grant CREATE SESSION, ALTER SESSION TO USRSISREC;
+
+drop user ADMSISREC CASCADE;
+drop user USRSISREC CASCADE;
+
+
+C:\Windows\system32>cd E:\smn\packages\Oracle.ManagedDataAccess.12.1.021\lib\net40
+
+C:\Windows\system32>e:
+
+E:\smn\packages\Oracle.ManagedDataAccess.12.1.021\lib\net40>"C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools\gacutil.exe" /i Oracle.ManagedDataAccess.dll
+Microsoft (R) .NET Global Assembly Cache Utility.  Version 4.0.30319.33440
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Assembly successfully added to the cache
+
+
+nico.fer.cl@gmail.com
+nicofercl
+1RecuperoRecupero1.

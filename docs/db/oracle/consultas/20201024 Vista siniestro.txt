@@ -1,0 +1,140 @@
+select 
+sin."Id" Id,
+sin."Numero" Numero,
+sin."Riesgo" Riesgo,
+sin."FechaDenuncio" FechaDenuncio,
+sin."FechaSiniestro" FechaSiniestro,
+sin."Probabilidad" Probabilidad,
+sin."Compania" Compania,
+sin."Provision" Provision,
+sin."FechaAsignacion" FechaAsignacion,
+sin."Prescripcion" Prescripcion,
+usu."Nombres" Nombres,
+sin."FechaUltimoCambioEstado" FechaUltimoCambioEstado,
+sin."EstadoVisado" EstadoVisado,
+sin."Region" Region,
+sin."ActualizadoPor" ActualizadoPor,
+sin."CompaniaTercero" CompaniaTercero,
+sin."EstadoId" EstadoId,
+sin."EjecutivoId" EjecutivoId,
+svies."Nombre" EstadoDestino,
+est."Nombre" Estado,
+est."DiasAlerta" DiasAlerta,
+CASE 
+    WHEN sin."Compania" = 1 THEN 
+                                             CASE WHEN csele.CCOETS_ELE = 4 
+                                             THEN csele.VMPEST_ELE
+                                             WHEN (csele.VMPEST_ELE - cpro.vprovi) <=0
+                                             THEN 0
+                                             ELSE (csele.VMPEST_ELE - cpro.vprovi) END
+    WHEN sin."Compania" = 2 THEN 
+                                            CASE WHEN bsele.CCOETS_ELE = 4 
+                                             THEN bsele.VMPEST_ELE
+                                             WHEN (bsele.VMPEST_ELE - bpro.vprovi) <=0
+                                             THEN 0
+                                             ELSE (bsele.VMPEST_ELE - bpro.vprovi) END
+    END AS GastoUf
+from siniestros sin 
+left outer join USUARIOS usu on usu."Id" = sin."EjecutivoId"
+left outer join SOLICITUDESVISTO svi on svi."SiniestroId" = sin."Id" and svi."Id" = sin."EstadoVisado"
+left outer join ESTADOS svies on svies."Id" = svi."EstadoTDestinoId"
+join ESTADOS est on est."Id" = sin."EstadoId"
+left outer join CONCORDE.SNACSELE@RDB_P02.bciseguros.cl csele on csele.NSINIE_ELE = sin."Numero" and csele.NRIESG_ELE = sin."Riesgo"
+left outer join BRETON.SNACSELE@RDB_P02.bciseguros.cl bsele on bsele.NSINIE_ELE = sin."Numero" and bsele.NRIESG_ELE = sin."Riesgo"
+left outer join (select nsinie_pro, max(VPROVI_PRO) vprovi from CONCORDE.SNACSPRO@RDB_P02.bciseguros.cl where nsecue_pro = 999 group by nsinie_pro) cpro on cpro.nsinie_pro = csele.NSINIE_ELE
+left outer join (select nsinie_pro, max(VPROVI_PRO) vprovi from BRETON.SNACSPRO@RDB_P02.bciseguros.cl where nsecue_pro = 999 group by nsinie_pro) bpro on bpro.nsinie_pro = bsele.NSINIE_ELE
+left outer join (SELECT NSINIE_CPA, SUM(VTDOPA_CPA) MONTO_PESOS from CONCORDE.SNABCCPA@RDB_P02.bciseguros.cl WHERE CESTAD_CPA = 'OK' GROUP BY NSINIE_CPA) CCPA on CSELE.NSINIE_ELE = CCPA.NSINIE_CPA
+left outer join (SELECT NSINIE_CPA, SUM(VTDOPA_CPA) MONTO_PESOS from BRETON.SNABCCPA@RDB_P02.bciseguros.cl WHERE CESTAD_CPA = 'OK' GROUP BY NSINIE_CPA) BCPA on BSELE.NSINIE_ELE = BCPA.NSINIE_CPA
+where est."EtapaId" = 30 
+order by CCPA.MONTO_PESOS;
+ 
+ 
+select * from VCONSIN where EtapaId = 30 and rownum < 10;
+
+ select 
+sin."Id" Id,
+sin."Numero" Numero,
+sin."Riesgo" Riesgo,
+sin."FechaDenuncio" FechaDenuncio,
+sin."FechaSiniestro" FechaSiniestro,
+sin."Probabilidad" Probabilidad,
+sin."Compania" Compania,
+sin."Provision" Provision,
+sin."FechaAsignacion" FechaAsignacion,
+sin."Prescripcion" Prescripcion,
+usu."Nombres" Nombres,
+sin."FechaUltimoCambioEstado" FechaUltimoCambioEstado,
+sin."EstadoVisado" EstadoVisado,
+sin."Region" Region,
+sin."ActualizadoPor" ActualizadoPor,
+sin."CompaniaTercero" CompaniaTercero,
+sin."EstadoId" EstadoId,
+sin."EjecutivoId" EjecutivoId,
+svies."Nombre" EstadoDestino,
+est."Nombre" Estado,
+est."DiasAlerta" DiasAlerta,
+vsin.GastoUF GastoUf,
+vsin.MONTOOR MontoOr,
+vsin.TIPODANIO TipoDanio,
+vsin.TIPOORDEN TipoOrden,
+vsin.Provision Provision,
+vsin.Aceptado Aceptado
+from siniestros sin 
+left outer join USUARIOS usu on usu."Id" = sin."EjecutivoId"
+left outer join SOLICITUDESVISTO svi on svi."SiniestroId" = sin."Id" and svi."Id" = sin."EstadoVisado"
+left outer join ESTADOS svies on svies."Id" = svi."EstadoTDestinoId"
+join ESTADOS est on est."Id" = sin."EstadoId"
+left outer join
+ (
+ select /*+ index(sele SNACSELE35) */ distinct sele.NSINIE_ELE,
+sele.NRIESG_ELE, 
+X.CTIPOR_OCR TIPOORDEN,
+CASE WHEN SELE.CCOETS_ELE = 4 
+             THEN SELE.VMPEST_ELE
+             WHEN (SELE.VMPEST_ELE - spro.VPROVI_PRO) <=0
+             THEN 0
+             ELSE (SELE.VMPEST_ELE - spro.VPROVI_PRO)
+        END AS GastoUf,
+SGT.cstsgt_sta TipoDanio,
+SELE.CCOESS_ELE Aceptado,
+CASE WHEN SELE.CCOETS_ELE = 4 
+    THEN 0
+    ELSE SPRO.VPROVI_PRO
+END AS Provision,
+CPA.MONTOOR
+from 
+CONCORDE.SNACSELE@RDB_P02.bciseguros.cl sele 
+left outer join CONCORDE.SNACSPRO@RDB_P02.bciseguros.cl spro on
+    spro.cramo_pro = sele.CRAMO_ELE and
+    spro.CSUCUR_PRO = sele.CSUCUR_ELE and
+    spro.nsecue_pro = 999 and
+    spro.nsinie_pro = sele.NSINIE_ELE
+ left outer join   (select * from 
+                        (select n.*,row_number() over 
+                            (partition by NSINIE_OCR 
+                                order by 
+                                femisa_ocr desc,
+                                femism_ocr desc,
+                                femisd_ocr desc) rn 
+                        from CONCORDE.SNACSOCR@RDB_P02.bciseguros.cl n
+                        )
+                        where rn = 1) 
+                        X on ( SELE.NSINIE_ELE = x.NSINIE_OCR )
+left outer join    (SELECT icpa.NSINIE_CPA, SUM(icpa.VTDOPA_CPA) MONTOOR 
+                    FROM CONCORDE.SNABCCPA@RDB_P02.bciseguros.cl icpa
+                    WHERE icpa.CESTAD_CPA = 'OK' 
+                    GROUP BY icpa.NSINIE_CPA) CPA on SELE.NSINIE_ELE = CPA.NSINIE_CPA
+left outer join     (select gst.NSINIE_STA , gst.NRIESG_STA, gst.cstsgt_sta 
+                    from CONCORDE.SNAUGSTA@RDB_P02.bciseguros.cl gst 
+                    where rownum < 2 and gst.CSTSGT_STA in ('210','206')) SGT 
+                    on SGT.NSINIE_STA = SELE.NSINIE_ELE  and SGT.NRIESG_STA = SELE.NRIESG_ELE
+ )  vsin on vsin.NSINIE_ELE = sin."Numero" and vsin.NRIESG_ELE = sin."Riesgo"
+ where sin."Id" = 20646;
+
+select *
+                    from CONCORDE.SNACSPRO@RDB_P02.bciseguros.cl SGT 
+                    where SGT.NSINIE_STA = 6617994  and SGT.NRIESG_STA = 2 and SGT.CSTSGT_STA in ('210','206'); 
+                  
+
+
+select * from siniestros where "Numero" = 6617994;

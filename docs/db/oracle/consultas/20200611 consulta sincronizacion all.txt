@@ -1,0 +1,38 @@
+select 
+                    SELE.NSINIE_ELE NumeroSiniestro, 
+                    SELE.finsnd_ele DiaDenuncio, 
+                    SELE.finsnm_ele  MesDenuncio, 
+                    SELE.finsna_ele AnioDenuncio, 
+                    SIN.fsinid_sin DiaSiniestro,
+                    SIN.fsinim_sin  MesSiniestro,
+                    SIN.fsinia_sin AnioSiniestro, 
+                    SELE.CSUCUR_ELE CodigoSucursal,
+                    SELE.CTPDOC_ELE TipoDocumento,
+                    SELE.NPOLIZ_ELE NumeroPoliza, 
+                    SELE.NITEM_ELE NumeroItem,
+                    x.ctipor_ocr TipoOrden,
+                    (select SUM(icpa.VTDOPA_CPA) FROM {compania}.SNABCCPA icpa WHERE  icpa.NSINIE_CPA = SELE.NSINIE_ELE and icpa.CESTAD_CPA = 'OK') MontoOr,
+                    SELE.vmpest_ele GastoUf,
+                    SGT.cstsgt_sta TipoDanio,
+                    null Aceptado,
+                    null Provision
+                    from  {compania}.SNACSELE SELE 
+                    JOIN {compania}.SNACSSIN SIN ON SELE.NSINIE_ELE = SIN.NSINIE_SIN 
+                    left outer join   (select * from 
+                                        (select n.*,row_number() over 
+                                            (partition by NSINIE_OCR 
+                                                order by 
+                                                femisa_ocr desc,
+                                                femism_ocr desc,
+                                                femisd_ocr desc) rn 
+                                        from {compania}.SNACSOCR n
+                                        )
+                                        where rn = 1) 
+                                        X on ( SELE.NSINIE_ELE = x.NSINIE_OCR )
+                    left outer join    (SELECT icpa.NSINIE_CPA, SUM(icpa.VTDOPA_CPA) MONTO_PESOS 
+                                        FROM {compania}.SNABCCPA icpa
+                                        WHERE icpa.CESTAD_CPA = 'OK' 
+                                        GROUP BY icpa.NSINIE_CPA) CPA on SELE.NSINIE_ELE = CPA.NSINIE_CPA
+                    left outer join     (select gst.NSINIE_STA , gst.cstsgt_sta from {compania}.SNAUGSTA gst where rownum < 2 and gst.CSTSGT_STA in ('210','206')) SGT 
+                                        on SGT.NSINIE_STA = SELE.NSINIE_ELE
+                    WHERE SELE.finsna_ele = :anio  AND SELE.finsnm_ele  = :mes AND  SELE.finsnd_ele = :dia AND SELE.NRIESG_ELE IN (2,6,10,11,12)

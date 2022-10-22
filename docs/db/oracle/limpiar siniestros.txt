@@ -1,0 +1,17 @@
+delete from entradasobservacion;
+
+delete from entradasbitacora;
+
+delete from solicitudesvisto;
+
+delete from infovehiculos;
+
+delete from infopersonas;
+
+delete from tercerovehiculos;
+
+delete from terceros;
+
+delete from siniestros;
+
+commit;

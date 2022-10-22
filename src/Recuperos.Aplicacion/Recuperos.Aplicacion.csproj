@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7EBA1AE4-2303-48E6-879E-C177F02C3EA3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Recuperos.Aplicacion</RootNamespace>
+    <AssemblyName>Recuperos.Aplicacion</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.6.2\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="MediatR, Version=8.0.1.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediatR.8.0.1\lib\net461\MediatR.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.9.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.9.0\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Comun\Automapper\IMapFrom.cs" />
+    <Compile Include="Comun\Automapper\MappingProfile.cs" />
+    <Compile Include="Comun\Comportamientos\RequestLogger.cs" />
+    <Compile Include="Comun\Comportamientos\RequestValidationBehavior.cs" />
+    <Compile Include="Comun\Comportamientos\ValidateNada.cs" />
+    <Compile Include="Comun\Exceptions\ValidationException.cs" />
+    <Compile Include="Comun\Helpers\DateComoNumberHelper.cs" />
+    <Compile Include="Comun\Helpers\EnumHelper.cs" />
+    <Compile Include="Comun\Helpers\OrdenamientoHelperExtension.cs" />
+    <Compile Include="Comun\Helpers\PropertyOrMemeberExpression.cs" />
+    <Compile Include="Comun\Helpers\RutHelper.cs" />
+    <Compile Include="Comun\SimpleInjectorValidatorFactory.cs" />
+    <Compile Include="Funciones\Base\ResponseBase.cs" />
+    <Compile Include="Funciones\Estados\EstadoIdentificable.cs" />
+    <Compile Include="Funciones\Estados\Queries\ObtenerEstado\ObtenerEstadoQueryHandler.cs" />
+    <Compile Include="Funciones\Estados\Transiciones\Commands\CambiarCertificables\CambiarCertificablesCommand.cs" />
+    <Compile Include="Funciones\Estados\Transiciones\Queries\ListarCertificables\ListarCertificablesQuery.cs" />
+    <Compile Include="Funciones\Estados\Transiciones\Queries\Listar\ListarTransicionesQueryHandler.cs" />
+    <Compile Include="Funciones\Estados\Transiciones\Queries\Listar\TransicionDto.cs" />
+    <Compile Include="Funciones\Etapas\Queries\ObtenerEtapa\ObtenerEtapaQueryHandler.cs" />
+    <Compile Include="Funciones\Servicios\ContentManager\Modelo\ArchivoPayload.cs" />
+    <Compile Include="Funciones\Servicios\Equifax\BuscarRutEquifax\RutResultVehiculoEquifaxViewModel.cs" />
+    <Compile Include="Funciones\Servicios\Equifax\BuscarVehiculoEquifax\ResultadoPorPatenteEquifaxViewModel.cs" />
+    <Compile Include="Funciones\Servicios\Migracion\Commands\Migrar\MigrarCommand.cs" />
+    <Compile Include="Funciones\Servicios\Migracion\Commands\Migrar\MigrarCommandHandler.cs" />
+    <Compile Include="Funciones\Servicios\Migracion\Commands\Migrar\ResultadoMigracion.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetConductores\GetConductoresQuery.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetConductores\GetConductoresQueryHandler.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetFacturas\FacturasResponseViewModel.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetFacturas\FacturaViewModel.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetFacturas\GetFacturasQuery.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetFacturas\GetFacturasQueryHandler.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetPropietario\GetPropietarioQuery.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetPropietario\GetPropietarioQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Archivos\Commands\Agregar\AgregarArchivoCommand.cs" />
+    <Compile Include="Funciones\Siniestros\Archivos\Commands\Agregar\AgregarArchivoCommandHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Archivos\Commands\Eliminar\EliminarArchivoCommand.cs" />
+    <Compile Include="Funciones\Siniestros\Archivos\Commands\Eliminar\EliminarArchivoCommandHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Archivos\Queries\Listar\ArchivoAdjuntoViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Archivos\Queries\Listar\ListarArchivosQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Archivos\Queries\Listar\ListarArchivosQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Archivos\Queries\Obtener\ArchivoObtenidoViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Archivos\Queries\Obtener\ObtenerArchivoQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Archivos\Queries\Obtener\ObtenerArchivoQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ConsultaAsignado\ConsultaAsignadoQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ConsultaAsignado\ConsultaAsignadoQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ConsultaAsignado\SiniestroAsignadoViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestros\Propiedades\PropiedadPrescripcion.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestros\Propiedades\TiposAlertaPrescripcion.cs" />
+    <Compile Include="Funciones\Siniestros\Observaciones\Commands\Agregar\AgregarObservacionCommand.cs" />
+    <Compile Include="Funciones\Siniestros\Observaciones\Commands\Agregar\AgregarObservacionCommandHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Observaciones\Queries\ObtenerObservacionesSiniestro\ObservacionesResponseViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Observaciones\Queries\ObtenerObservacionesSiniestro\ObservacionViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Observaciones\Queries\ObtenerObservacionesSiniestro\ObtenerObservacionesSiniestroQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Observaciones\Queries\ObtenerObservacionesSiniestro\ObtenerObservacionesSiniestroQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bitacora\Queries\ObtenerBitacoraSiniestro\BitacoraResponseViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bitacora\Queries\ObtenerBitacoraSiniestro\BitacoraViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bitacora\Queries\ObtenerBitacoraSiniestro\ObtenerBitacoraSiniestroQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bitacora\Queries\ObtenerBitacoraSiniestro\ObtenerBitacoraSiniestroQueryHandler.cs" />
+    <Compile Include="Funciones\Estados\Commands\CrearEstado\CrearEstadoCommand.cs" />
+    <Compile Include="Funciones\Estados\Commands\CrearEstado\CrearEstadoCommandHandler.cs" />
+    <Compile Include="Funciones\Estados\Commands\CrearEstado\CrearEstadoCommandValidator.cs" />
+    <Compile Include="Funciones\Estados\Commands\EditarEstado\EditarEstadoCommand.cs" />
+    <Compile Include="Funciones\Estados\Commands\EliminarEstado\EliminarEstadoCommand.cs" />
+    <Compile Include="Funciones\Estados\Queries\ListarEstados\ListarEstadosQuery.cs" />
+    <Compile Include="Funciones\Estados\Queries\ListarEstados\ListarEstadosQueryHandler.cs" />
+    <Compile Include="Funciones\Estados\Queries\ListarEstados\ListarEstadosQueryValidator.cs" />
+    <Compile Include="Funciones\Estados\Queries\ObtenerEstado\ObtenerEstadoQuery.cs" />
+    <Compile Include="Funciones\Etapas\Commands\CrearEtapa\CrearEtapaCommand.cs" />
+    <Compile Include="Funciones\Etapas\Commands\CrearEtapa\CrearEtapaCommandHandler.cs" />
+    <Compile Include="Funciones\Etapas\Commands\CrearEtapa\CrearEtapaCommandValidator.cs" />
+    <Compile Include="Funciones\Etapas\Commands\EditarEtapa\EditarEtapaCommand.cs" />
+    <Compile Include="Funciones\Etapas\Commands\EditarEtapa\EditarEtapaCommandHandler.cs" />
+    <Compile Include="Funciones\Etapas\Commands\EliminarEtapa\EliminarEtapaCommand.cs" />
+    <Compile Include="Funciones\Etapas\Queries\ObtenerEtapa\ObtenerEtapaQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Cabecera\Queries\CabeceraQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Cabecera\Queries\CabeceraQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Cabecera\Queries\SiniestroCabeceraViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Documentos\Queries\DocumentosSiniestroQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Documentos\Queries\DocumentosSiniestroQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Documentos\Queries\SiniestroDocumentoViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Commands\CambiarEstadoCommand\Pipelines\PreCambioEstado\PreCambioEstadoRecuperarRegionHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Commands\CambiarEstadoCommand\Pipelines\PreCambioEstado\PreCambioEstadoSiniestro.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Commands\GestionSiniestroCommand.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Commands\GestionSiniestroCommandHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Queries\CamposEnCambioEstado\CamposEnCambioEstadoQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Queries\CamposEnCambioEstado\CamposEnCambioEstadoQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Queries\CamposEnCambioEstado\PermisosObtenidosViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Queries\Permisos\ConfiguradorPermisos.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Queries\InicializacionSiniestro\GestionSiniestroQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Queries\InicializacionSiniestro\GestionSiniestroQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Queries\Permisos\Permiso.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Queries\Permisos\ListaPermisos.cs" />
+    <Compile Include="Funciones\Siniestros\Pestanas\Gestion\Queries\InicializacionSiniestro\SiniestroObtenidoGestionViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Commands\Sincronizar\SincronizarCommandHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Commands\Utiles\TiposProcesosUtiles.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Commands\Utiles\UtilesSiniestroCommand.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Commands\Visar\RechazoVisadoCommandViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Commands\Visar\VisarSiniestroCommand.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Commands\Visar\VisarSiniestroCommandHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMonoUsuario\IListarSiniestroQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMultiUsuario\SincronizacionLunes.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosVisables\ExportarSiniestrosVisablesQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosVisables\FiltroSiniestrosVisables.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosVisables\IListarSiniestroVisablesQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosVisables\ListarSiniestrosVisablesQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosVisables\ListarSiniestrosVisablesQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosVisables\SiniestroVisablesExportableViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosVisables\SiniestroVisablesResponseViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosVisables\SiniestroVisablesViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMultiUsuario\IListarSiniestroQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMultiUsuario\SiniestroMultiUsuarioExportableViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ObtenerSiniestro\SiniestroObtenidoViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Commands\TerceroCommandBase.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\BuscarRut\VehiculoPorRutViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\BuscarVehiculo\VehiculoPorPatenteViewModel.cs" />
+    <Compile Include="Interfaces\IContentManagerHttpClientAccessor.cs" />
+    <Compile Include="Interfaces\IRnvmLocalHttpClientAccessor.cs" />
+    <Compile Include="Interfaces\Models\ISiniestroNumerable.cs" />
+    <Compile Include="Interfaces\Servicios\ContentManager\IApiContentManager.cs" />
+    <Compile Include="Interfaces\Servicios\ControlAcceso\IControlAcceso.cs" />
+    <Compile Include="Interfaces\Servicios\ControlAcceso\Modelos\Aplicacion.cs" />
+    <Compile Include="Interfaces\Servicios\ControlAcceso\Modelos\ItemRol.cs" />
+    <Compile Include="Interfaces\Servicios\ControlAcceso\Modelos\ItemToken.cs" />
+    <Compile Include="Interfaces\Servicios\ControlAcceso\Modelos\LoginResponse.cs" />
+    <Compile Include="Interfaces\Servicios\ControlAcceso\Modelos\UsuarioResponse.cs" />
+    <Compile Include="Interfaces\Servicios\Recup02\BitacoraImportada.cs" />
+    <Compile Include="Interfaces\Servicios\Recup02\EstadoImportado.cs" />
+    <Compile Include="Interfaces\Servicios\Recup02\IApiMigracion.cs" />
+    <Compile Include="Interfaces\Servicios\Recup02\ObservacionImportada.cs" />
+    <Compile Include="Interfaces\Servicios\Recup02\TerceroImportado.cs" />
+    <Compile Include="Interfaces\Servicios\Recup02\VehiculoImportado.cs" />
+    <Compile Include="Interfaces\Servicios\RnvmLocal\IRnvmLocal.cs" />
+    <Compile Include="Interfaces\Servicios\RnvmLocal\Models\Comuna.cs" />
+    <Compile Include="Interfaces\Servicios\RnvmLocal\Models\ConsultaDatosResult.cs" />
+    <Compile Include="Interfaces\Servicios\RnvmLocal\Models\Direccion.cs" />
+    <Compile Include="Interfaces\Servicios\RnvmLocal\Models\Marca.cs" />
+    <Compile Include="Interfaces\Servicios\RnvmLocal\Models\Mensaje.cs" />
+    <Compile Include="Interfaces\Servicios\RnvmLocal\Models\Modelo.cs" />
+    <Compile Include="Interfaces\Servicios\RnvmLocal\Models\Propietario.cs" />
+    <Compile Include="Interfaces\Servicios\RnvmLocal\Models\Region.cs" />
+    <Compile Include="Interfaces\Servicios\RnvmLocal\Models\RnvmResult.cs" />
+    <Compile Include="Interfaces\Servicios\RnvmLocal\Models\Vehiculo.cs" />
+    <Compile Include="Models\Campo.cs" />
+    <Compile Include="Models\CampoFecha.cs" />
+    <Compile Include="Models\CampoTexto.cs" />
+    <Compile Include="Models\ItemLista.cs" />
+    <Compile Include="Funciones\Etapas\Queries\ListarEtapas\ListarEtapasQuery.cs" />
+    <Compile Include="Funciones\Etapas\Queries\ListarEtapas\ListarEtapasQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Observaciones\Queries\ObtenerTiposObervacion\ObtenerTiposObervacionQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Observaciones\Queries\ObtenerTiposObervacion\ObtenerTiposObervacionQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Commands\Asignar\AsignarCommand.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Commands\Asignar\AsignarCommandHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Commands\Sincronizar\SincronizarCommand.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMonoUsuario\ExportarSiniestrosMonoUsuarioQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMonoUsuario\ListarSiniestrosMonoUsuarioQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMonoUsuario\ListarSiniestrosMonoUsuarioQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMonoUsuario\SiniestroMonoUsuarioResponseViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMonoUsuario\SiniestroMonoUsuarioViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMultiUsuario\ExportarSiniestrosMultiUsuarioQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMultiUsuario\FiltroSiniestros.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetLiquidador\GetLiquidadorQuery.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetLiquidador\GetLiquidadorQueryHandler.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetDenunciante\GetDenuncianteQuery.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetDenunciante\GetDenuncianteQueryHandler.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetConductor\GetConductorQuery.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetConductor\GetConductorQueryHandler.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetAccidente\GetAccidenteQuery.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetAccidente\GetAccidenteQueryHandler.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetVehiculo\GetVehiculoQuery.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetVehiculo\GetVehiculoQueryHandler.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetConstancia\GetConstanciaQuery.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetConstancia\GetConstanciaQueryHandler.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetAsegurado\GetAseguradoQuery.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetAsegurado\GetAseguradoQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMultiUsuario\FiltroViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMultiUsuario\ListarSiniestrosMultiUsuarioQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMultiUsuario\ListarSiniestrosMultiUsuarioQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMultiUsuario\SiniestroMultiUsuarioResponseViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestros\ListarSiniestrosQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestros\ListarSiniestrosQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ListarSiniestrosMultiUsuario\SiniestroMultiUsuarioViewModel.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetRelato\GetRelatoQuery.cs" />
+    <Compile Include="Funciones\Servicios\Recup02\GetRelato\GetRelatoQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ObtenerSiniestro\ObtenerSiniestroQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Bandejas\Queries\ObtenerSiniestro\ObtenerSiniestroQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Commands\Agregar\AgregarTerceroCommand.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Commands\Agregar\AgregarTerceroCommandHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Commands\Editar\EditarTerceroCommand.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Commands\Editar\EditarTerceroCommandHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Commands\Eliminar\EliminarTerceroCommand.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Commands\Eliminar\EliminarTerceroCommandHandler.cs" />
+    <Compile Include="Funciones\Servicios\Equifax\BuscarRutEquifax\BuscarRutEquifaxQuery.cs" />
+    <Compile Include="Funciones\Servicios\Equifax\BuscarRutEquifax\BuscarRutEquifaxQueryHandler.cs" />
+    <Compile Include="Funciones\Servicios\Equifax\BuscarRutEquifax\RutResultEquifaxViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\BuscarRut\BuscarRutQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\BuscarRut\BuscarRutQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\BuscarRut\RutResultViewModel.cs" />
+    <Compile Include="Funciones\Servicios\Equifax\BuscarVehiculoEquifax\BuscarVehiculoEquifaxQuery.cs" />
+    <Compile Include="Funciones\Servicios\Equifax\BuscarVehiculoEquifax\BuscarVehiculoEquifaxQueryHandler.cs" />
+    <Compile Include="Funciones\Servicios\Equifax\BuscarVehiculoEquifax\VehiculoEquifaxViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\BuscarVehiculo\BuscarVehiculoQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\BuscarVehiculo\BuscarVehiculoQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\BuscarVehiculo\ResultadoPorPatenteViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\Listar\ItemListableTerceroViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\Listar\ListarTercerosQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\Listar\ListarTercerosQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\Listar\PaginaListableTerceroViewModel.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\Obtener\ObtenerTerceroQuery.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\Obtener\ObtenerTerceroQueryHandler.cs" />
+    <Compile Include="Funciones\Siniestros\Terceros\Queries\Obtener\TerceroViewModel.cs" />
+    <Compile Include="Funciones\Estados\Transiciones\Commands\CrearTransicion\CrearTransicionCommand.cs" />
+    <Compile Include="Funciones\Estados\Transiciones\Commands\EliminarTransicion\EliminarTransicionCommand.cs" />
+    <Compile Include="Funciones\Estados\Transiciones\Queries\Listar\ItemTransicionDto.cs" />
+    <Compile Include="Funciones\Estados\Transiciones\Queries\Listar\ListarTransicionesQuery.cs" />
+    <Compile Include="Funciones\Estados\Transiciones\Queries\Listar\NodoTransicionDto.cs" />
+    <Compile Include="Funciones\Usuarios\Queries\AutenticarUsuarioQuery\AutenticarUsuarioQuery.cs" />
+    <Compile Include="Funciones\Usuarios\Queries\AutenticarUsuarioQuery\AutenticarUsuarioQueryHandler.cs" />
+    <Compile Include="Funciones\Usuarios\Queries\AutenticarUsuarioQuery\UsuarioViewModel.cs" />
+    <Compile Include="Funciones\Usuarios\Queries\ListarUsuariosPorPerfil\ListarUsuariosPorPerfilQuery.cs" />
+    <Compile Include="Funciones\Usuarios\Queries\ListarUsuariosPorPerfil\ListarUsuariosPorPerfilQueryHandler.cs" />
+    <Compile Include="Interfaces\Autorizacion\IUsuarioActualService.cs" />
+    <Compile Include="Interfaces\Exportacion\IExportadorExcel.cs" />
+    <Compile Include="Interfaces\IAppDbContext.cs" />
+    <Compile Include="Interfaces\IGenerateDbContext.cs" />
+    <Compile Include="Interfaces\IEquifaxHttpClientAccessor.cs" />
+    <Compile Include="Interfaces\IRecup02HttpClientAccessor.cs" />
+    <Compile Include="Interfaces\IResultSet.cs" />
+    <Compile Include="Interfaces\Models\ExcelDespacho.cs" />
+    <Compile Include="Interfaces\Models\ExcelFilaDespacho.cs" />
+    <Compile Include="Interfaces\Models\ExcelFileDespachoMetadata.cs" />
+    <Compile Include="Interfaces\Servicios\Equifax\IApiEquifax.cs" />
+    <Compile Include="Interfaces\Servicios\Recup02\IApiRecup02.cs" />
+    <Compile Include="Interfaces\Servicios\Recup02\SiniestroImportado.cs" />
+    <Compile Include="Models\ItemsLista.cs" />
+    <Compile Include="Models\PostExterno.cs" />
+    <Compile Include="Models\Seguridad\Accesos.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Recuperos.Modelo\Recuperos.Modelo.csproj">
+      <Project>{c5080d23-7378-4e14-b44a-2f4173747b7c}</Project>
+      <Name>Recuperos.Modelo</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Funciones\Siniestros\Pestanas\Gestion\Commands\CambiarEstadoCommand\Pipelines\PostCambioEstado\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
+</Project>

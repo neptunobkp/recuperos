@@ -1,0 +1,393 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3AD6C195-4BEE-463F-A550-D696C217CE3B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Recuperos.RestApi</RootNamespace>
+    <AssemblyName>Recuperos.RestApi</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.6.2\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="MediatR, Version=8.0.1.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediatR.8.0.1\lib\net461\MediatR.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Cors, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Cors.4.1.0\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.19.7.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess.EntityFramework, Version=6.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.EntityFramework.19.7.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.9.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.9.0\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.WebApi, Version=4.9.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.WebApi.4.9.0\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Cors, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.4\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.4\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\bci.png" />
+    <Content Include="assets\bg.jpg" />
+    <Content Include="assets\equifax.png" />
+    <Content Include="assets\favicon.ico" />
+    <Content Include="assets\icono-menu.png" />
+    <Content Include="assets\icono-usuario.png" />
+    <Content Include="assets\logobci-400x100.png" />
+    <Content Include="assets\logobci.svg" />
+    <Content Include="assets\plus-icon.svg" />
+    <Content Include="assets\zenit.png" />
+    <Content Include="favicon.ico" />
+    <Content Include="main-es2015.js" />
+    <Content Include="main-es5.js" />
+    <Content Include="polyfills-es2015.js" />
+    <Content Include="polyfills-es5.js" />
+    <Content Include="runtime-es2015.js" />
+    <Content Include="runtime-es5.js" />
+    <Content Include="styles.css" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SwaggerConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Administracion\Controllers\EstadosController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\EtapasController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\TransicionesController.cs" />
+    <Compile Include="Areas\Bandeja\Controllers\MonoUsuariosController.cs" />
+    <Compile Include="Areas\Bandeja\Controllers\SiniestrosBandejaController.cs" />
+    <Compile Include="Areas\Bandeja\Controllers\VisablesController.cs" />
+    <Compile Include="Areas\Bandeja\Controllers\MultiUsuariosController.cs" />
+    <Compile Include="Areas\Misc\Controllers\DefaultController.cs" />
+    <Compile Include="Areas\Misc\Controllers\VersionController.cs" />
+    <Compile Include="Areas\Parametros\Controllers\TiposObservacionController.cs" />
+    <Compile Include="Areas\Publico\Controllers\AnonimoController.cs" />
+    <Compile Include="Areas\Servicios\Controllers\ApiEquifaxController.cs" />
+    <Compile Include="Areas\Servicios\Controllers\ApiRecup02Controller.cs" />
+    <Compile Include="Areas\Siniestro\Controllers\EntradasBitacoraController.cs" />
+    <Compile Include="Areas\Siniestro\Controllers\EntradasObservacionController.cs" />
+    <Compile Include="Areas\Siniestro\Controllers\AdjuntosController.cs" />
+    <Compile Include="Areas\Siniestro\Controllers\SiniestroCabeceraController.cs" />
+    <Compile Include="Areas\Siniestro\Controllers\SiniestroDocumentoController.cs" />
+    <Compile Include="Areas\Siniestro\Controllers\SiniestroGestionController.cs" />
+    <Compile Include="Areas\Siniestro\Controllers\SiniestroController.cs" />
+    <Compile Include="Areas\Siniestro\Controllers\SiniestrosController.cs" />
+    <Compile Include="Areas\Siniestro\Controllers\TercerosController.cs" />
+    <Compile Include="Areas\Tareas\Controllers\MigradorRecuperoJavaController.cs" />
+    <Compile Include="Areas\Tareas\Controllers\SincronizadorDiaCeroController.cs" />
+    <Compile Include="Areas\Usuario\Controllers\UsuariosController.cs" />
+    <Compile Include="Areas\Vehiculo\Controllers\PropietariosController.cs" />
+    <Compile Include="Areas\Vehiculo\Controllers\VehiculosController.cs" />
+    <Compile Include="Infraestructura\Automapper\MapperProvider.cs" />
+    <Compile Include="Infraestructura\Filtros\ClientActionFilterAttribute.cs" />
+    <Compile Include="Infraestructura\GlobalExceptionHandler.cs" />
+    <Compile Include="Infraestructura\Handlers\NLogExceptionLogger.cs" />
+    <Compile Include="Infraestructura\Handlers\OwinExceptionHandlerMiddlewareAppBuilderExtensions.cs" />
+    <Compile Include="Infraestructura\HttpClients\ContentManagerHttpClientAccessor.cs" />
+    <Compile Include="Infraestructura\HttpClients\EquifaxHttpClientAccessor.cs" />
+    <Compile Include="Infraestructura\HttpClients\Recup02HttpClientAccessor.cs" />
+    <Compile Include="Infraestructura\HttpClients\ConsultaDicomHttpClientAccessor.cs" />
+    <Compile Include="Infraestructura\HttpClients\RnvmLocalHttpClientAccessor.cs" />
+    <Compile Include="Infraestructura\InMemoryMultipartFormDataStreamProvider.cs" />
+    <Compile Include="Infraestructura\JsonContentNegotiator.cs" />
+    <Compile Include="Infraestructura\Seguridad\AplicacionAuthServerProvider.cs" />
+    <Compile Include="Infraestructura\Seguridad\HttpContextPrincipal.cs" />
+    <Compile Include="Infraestructura\Seguridad\UsuarioActual.cs" />
+    <Compile Include="Infraestructura\SimpleInjectorMediatr.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorAuth.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorConsultaDicom.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorContentManager.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorEquifax.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorInfraestructuras.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorInjector.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorMapper.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorMediador.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorP02.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorDatabase.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorRnvm.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorValidador.cs" />
+    <Compile Include="Infraestructura\StartupExtensions\ConfiguradorWebApi.cs" />
+    <Compile Include="Infraestructura\Handlers\OwinExceptionHandlerMiddleware.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Seguridad\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\mocks\Recuperos.Servicios.ConsultaDicom.Mocks\Recuperos.Servicios.ConsultaDicom.Mocks.csproj">
+      <Project>{c4ad0a7b-6f81-44cf-aefc-d1c6f3879204}</Project>
+      <Name>Recuperos.Servicios.ConsultaDicom.Mocks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mocks\Recuperos.Servicios.ContentManager.Mocks\Recuperos.Servicios.ContentManager.Mocks.csproj">
+      <Project>{07db4666-da37-48fc-a3d5-2c2b10e33030}</Project>
+      <Name>Recuperos.Servicios.ContentManager.Mocks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mocks\Recuperos.Servicios.ControlAcceso.Mocks\Recuperos.Servicios.ControlAcceso.Mocks.csproj">
+      <Project>{ab9c139b-5a94-4fbf-b73c-a6a3015d3d53}</Project>
+      <Name>Recuperos.Servicios.ControlAcceso.Mocks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mocks\Recuperos.Servicios.Recup02.Mocks\Recuperos.Servicios.Recup02.Mocks.csproj">
+      <Project>{473a7738-69d6-460b-8f2f-6e0160d8f97a}</Project>
+      <Name>Recuperos.Servicios.Recup02.Mocks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mocks\Recuperos.Servicios.RnvmLocal.Mocks\Recuperos.Servicios.RnvmLocal.Mocks.csproj">
+      <Project>{1a5bde74-5a1b-4d7b-87aa-0dfec88606fc}</Project>
+      <Name>Recuperos.Servicios.RnvmLocal.Mocks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recuperos.Aplicacion\Recuperos.Aplicacion.csproj">
+      <Project>{7eba1ae4-2303-48e6-879e-c177f02c3ea3}</Project>
+      <Name>Recuperos.Aplicacion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recuperos.Modelo\Recuperos.Modelo.csproj">
+      <Project>{c5080d23-7378-4e14-b44a-2f4173747b7c}</Project>
+      <Name>Recuperos.Modelo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recuperos.Persistencia.BaseOracle\Recuperos.Persistencia.BaseOracle.csproj">
+      <Project>{86728852-1735-4cdc-9898-854c9e239181}</Project>
+      <Name>Recuperos.Persistencia.BaseOracle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recuperos.Persistencia\Recuperos.Persistencia.csproj">
+      <Project>{09c52743-a445-47df-9899-c8c2e270e99f}</Project>
+      <Name>Recuperos.Persistencia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recuperos.Servicios.ConsultaDicom\Recuperos.Servicios.ConsultaDicom.csproj">
+      <Project>{4c24ce2f-4d60-4d85-b382-a8ba648f03fa}</Project>
+      <Name>Recuperos.Servicios.ConsultaDicom</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recuperos.Servicios.ContentManager\Recuperos.Servicios.ContentManager.csproj">
+      <Project>{11b8edd4-571b-4bd7-9559-a61c01647b70}</Project>
+      <Name>Recuperos.Servicios.ContentManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recuperos.Servicios.ControlAcceso\Recuperos.Servicios.ControlAcceso.csproj">
+      <Project>{72efd245-b618-4058-86e9-e9a5620d0d94}</Project>
+      <Name>Recuperos.Servicios.ControlAcceso</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recuperos.Servicios.Equifax.Mocks\Recuperos.Servicios.Equifax.Mocks.csproj">
+      <Project>{db150d74-58da-412d-aaed-6da5e748248a}</Project>
+      <Name>Recuperos.Servicios.Equifax.Mocks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recuperos.Servicios.Equifax\Recuperos.Servicios.Equifax.csproj">
+      <Project>{aec463ad-873e-4f93-af47-8cc89a80379d}</Project>
+      <Name>Recuperos.Servicios.Equifax</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recuperos.Servicios.Exportador\Recuperos.Servicios.Exportador.csproj">
+      <Project>{e7631d78-8c63-49f5-b86f-0d8f889707e4}</Project>
+      <Name>Recuperos.Servicios.Exportador</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recuperos.Servicios.Recup02\Recuperos.Servicios.Recup02.csproj">
+      <Project>{adae823b-9adf-4980-b9d2-acd276e442b6}</Project>
+      <Name>Recuperos.Servicios.Recup02</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recuperos.Servicios.RnvmLocal\Recuperos.Servicios.RnvmLocal.csproj">
+      <Project>{1b0c1d97-28d7-41e0-8236-fbde93fcd50a}</Project>
+      <Name>Recuperos.Servicios.RnvmLocal</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55074</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:55074/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

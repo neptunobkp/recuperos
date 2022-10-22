@@ -1,0 +1,27 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Body>
+        <sch:PlacaResponse xmlns:sch="http://www.equifax.cl/spring/ws/schemas">
+            <sch:clasificacion>L</sch:clasificacion>
+            <sch:placa>HJTT58</sch:placa>
+            <sch:descTipo>AUTOMOVIL</sch:descTipo>
+            <sch:descMarca>SUZUKI</sch:descMarca>
+            <sch:descModelo>SWIFT GLS 1.2</sch:descModelo>
+            <sch:tipoCombustible></sch:tipoCombustible>
+            <sch:numeroMotor>K12B-2004416</sch:numeroMotor>
+            <sch:numeroChasis>JS2ZC72S6G6401376</sch:numeroChasis>
+            <sch:numeroSerie></sch:numeroSerie>
+            <sch:descColor>ROJO</sch:descColor>
+            <sch:anoFab>2015</sch:anoFab>
+            <sch:fechaUltTransf>00000000</sch:fechaUltTransf>
+            <sch:avaluo>0000000000000</sch:avaluo>
+            <sch:fechaCompra>20121011</sch:fechaCompra>
+            <sch:PropietarioDTO>
+                <sch:fechaTransDesde>00000000</sch:fechaTransDesde>
+                <sch:fechaTransHasta>00000000</sch:fechaTransHasta>
+                <sch:rutDueno>0184624621</sch:rutDueno>
+                <sch:nombreDueno>PEREZ RIOS VICTORIA OLIVIA DE JESUS                         </sch:nombreDueno>
+                <sch:fechadeCarga>20160121</sch:fechadeCarga>
+            </sch:PropietarioDTO>
+        </sch:PlacaResponse>
+    </soapenv:Body>
+</soapenv:Envelope>

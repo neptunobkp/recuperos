@@ -1,0 +1,11 @@
+update siniestroes set estadoid = 29 where id between 700 and 800
+update siniestroes set estadoid = 40 where id between 801 and 900
+update siniestroes set estadoid = 113 where id between 901 and 1000
+update siniestroes set estadoid = 42 where id between 1001 and 1100
+update siniestroes set estadoid = 106 where id between 1101 and 1200
+update siniestroes set estadoid = 41 where id between 1201 and 1300
+update siniestroes set estadoid = 36 where id between 1401 and 1420
+update siniestroes set estadoid = 37 where id between 1421 and 1440
+update siniestroes set estadoid = 65 where id between 1441 and 1460
+update siniestroes set estadoid = 84 where id between 1461 and 1480
+update siniestroes set estadoid = 86 where id between 1481 and 1500
